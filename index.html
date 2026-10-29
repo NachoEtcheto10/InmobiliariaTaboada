@@ -4,11 +4,72 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grupo Taboada | Negocios Inmobiliarios · Ingeniería · Estudio Contable</title>
-  <meta name="description" content="Grupo Taboada: negocios inmobiliarios, ingeniería y construcción y estudio contable en Concepción del Uruguay, Entre Ríos. Atención personalizada desde 2014.">
+  <meta name="description" content="Grupo Taboada: Servicios integrales de negocios inmobiliarios, obras de ingeniería civil y estudio contable en Concepción del Uruguay, Entre Ríos. Atención personalizada y trayectoria desde 2014.">
+  <meta name="keywords" content="inmobiliaria concepcion del uruguay, casas en venta concepcion del uruguay, alquileres concepcion del uruguay, terrenos entre rios, ingenieria civil construccion, estudio contable concepcion del uruguay, javier taboada, hernan taboada, grupo taboada">
+  <meta name="author" content="Grupo Taboada">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="canonical" href="https://grupotaboada.com.ar/">
+
+  <!-- Geo Tags (Local SEO Concepción del Uruguay) -->
+  <meta name="geo.region" content="AR-E">
+  <meta name="geo.placename" content="Concepción del Uruguay">
+  <meta name="geo.position" content="-32.4842;-58.2328">
+  <meta name="ICBM" content="-32.4842, -58.2328">
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://grupotaboada.com.ar/">
+  <meta property="og:site_name" content="Grupo Taboada">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="Grupo Taboada | Negocios Inmobiliarios · Ingeniería · Estudio Contable">
+  <meta property="og:description" content="Negocios Inmobiliarios, Obras de Ingeniería y Estudio Contable en Concepción del Uruguay, Entre Ríos.">
+  <meta property="og:image" content="https://grupotaboada.com.ar/assets/img/logo-taboada.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Grupo Taboada | Negocios Inmobiliarios · Ingeniería · Estudio Contable">
+  <meta name="twitter:description" content="Negocios Inmobiliarios, Obras de Ingeniería y Estudio Contable en Concepción del Uruguay, Entre Ríos.">
+  <meta name="twitter:image" content="https://grupotaboada.com.ar/assets/img/logo-taboada.png">
+
+  <!-- Schema.org JSON-LD Structured Data (Google Rich Snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Grupo Taboada",
+    "image": "https://grupotaboada.com.ar/assets/img/logo-taboada.png",
+    "url": "https://grupotaboada.com.ar/",
+    "telephone": "+5493442512301",
+    "email": "info@grupotaboada.com.ar",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Juan Perón 363",
+      "addressLocality": "Concepción del Uruguay",
+      "addressRegion": "Entre Ríos",
+      "postalCode": "3260",
+      "addressCountry": "AR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -32.4842,
+      "longitude": -58.2328
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    "sameAs": [
+      "https://www.facebook.com/grupotaboada.com.ar",
+      "https://www.instagram.com/grupotaboada.com.ar/"
+    ]
+  }
+  </script>
+
   <meta name="theme-color" content="#2b2826">
-  <meta property="og:title" content="Grupo Taboada">
-  <meta property="og:description" content="Negocios Inmobiliarios · Ingeniería · Estudio Contable — Concepción del Uruguay, Entre Ríos.">
-  <meta property="og:image" content="assets/img/logo-taboada.png">
   <link rel="icon" type="image/png" href="assets/img/logo-taboada.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -263,7 +324,7 @@
           </div>
         </div>
 
-        <div class="cards cards--works">
+        <div class="cards cards--works" id="worksCards">
           <article class="work reveal">
             <img src="assets/img/ing-movimiento-aridos.jpg" alt="Excavadora realizando movimiento de suelos" loading="lazy">
             <div class="work__overlay">
@@ -399,6 +460,9 @@
         <form class="form reveal" id="contactForm" novalidate>
           <h3 class="form__title">Contactanos</h3>
 
+          <!-- Honeypot anti-spam invisible para usuarios reales -->
+          <input type="text" name="_trap" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off" aria-hidden="true">
+
           <fieldset class="field">
             <legend>Motivo</legend>
             <div class="seg">
@@ -416,17 +480,17 @@
           <div class="row">
             <label class="field">
               <span>Nombre y apellido</span>
-              <input type="text" name="nombre" autocomplete="name" required>
+              <input type="text" name="nombre" autocomplete="name" required maxlength="80">
             </label>
             <label class="field">
               <span>E-mail</span>
-              <input type="email" name="email" autocomplete="email" inputmode="email" required>
+              <input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="120">
             </label>
           </div>
 
           <label class="field">
             <span>Mensaje</span>
-            <textarea name="comentarios" rows="3" required></textarea>
+            <textarea name="comentarios" rows="3" required maxlength="2500" placeholder="¿En qué te podemos asesorar?"></textarea>
           </label>
 
           <p class="form__error" id="formError" role="alert" hidden>Completá todos los campos con un e-mail válido.</p>
@@ -473,7 +537,14 @@
       <!-- Dibujo original de la ciudad (iglesia, monumento y edificios) -->
       <img class="footer__city" src="assets/img/footer-ciudad.svg" alt="" aria-hidden="true">
 
-      <p class="footer__copy">© <span id="year">2026</span> Grupo Taboada. Todos los derechos reservados.</p>
+      <div class="footer__bottom">
+        <p class="footer__copy">
+          © <span id="year">2026</span> Grupo Taboada. Todos los derechos reservados. · <button type="button" class="footer__admin-text-link" id="openAdminBtn" aria-label="Acceso administrador">Admin</button>
+        </p>
+        <p class="footer__credits">
+          Desarrollado por <a href="https://www.linkedin.com/in/facundo-bautista-pais/" target="_blank" rel="noopener noreferrer">Facundo Pais</a> e <a href="https://www.linkedin.com/in/ignacio-etcheto-arca-020b29434/" target="_blank" rel="noopener noreferrer">Ignacio Etcheto</a>
+        </p>
+      </div>
     </div>
   </footer>
 
@@ -481,6 +552,173 @@
     <svg class="ico"><use href="#i-whatsapp"/></svg>
   </a>
 
-  <script src="app.js"></script>
+  <!-- ============ MODAL DE DETALLE DE PROPIEDAD ============ -->
+  <div class="prop-modal-backdrop" id="propModalBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="prop-modal" id="propModal">
+      <button type="button" class="prop-modal__close" id="propModalClose" aria-label="Cerrar detalle">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="prop-modal__media">
+        <img id="propModalImg" src="" alt="">
+        <span class="prop-modal__badge" id="propModalBadge"></span>
+      </div>
+      <div class="prop-modal__body">
+        <h2 class="prop-modal__title" id="propModalTitle"></h2>
+        <div class="prop-modal__meta">
+          <svg class="ico"><use href="#i-pin"/></svg>
+          <span id="propModalLocation"></span>
+        </div>
+        <div class="prop-modal__price" id="propModalPrice"></div>
+        <p class="prop-modal__desc" id="propModalDesc"></p>
+        <ul class="prop-modal__features" id="propModalFeatures"></ul>
+        <a href="#contacto" class="btn btn--primary prop-modal__cta" id="propModalCta">
+          Consultar por esta propiedad <svg class="ico"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL DE ADMINISTRACIÓN ============ -->
+  <div class="admin-modal-backdrop" id="adminModalBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="admin-panel" id="adminPanel">
+      <div class="admin-panel__head">
+        <div class="admin-panel__title">
+          <svg class="ico"><use href="#i-gem"/></svg>
+          <span>Administración Grupo Taboada</span>
+          <span class="admin-panel__badge">Gestión</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="admin-btn admin-btn--ghost" id="adminCloseBtn" aria-label="Cerrar panel">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Login View (si no está autenticado) -->
+      <div id="adminLoginView" style="padding: 40px 24px; text-align: center; max-width: 380px; margin: auto;">
+        <h3 style="font-family: var(--font-head); margin-bottom: 8px;">Acceso de Administrador</h3>
+        <p style="font-size: .88rem; color: var(--text-soft); margin-bottom: 20px;">Ingresá la clave de acceso para gestionar propiedades y obras.</p>
+        <form id="adminLoginForm">
+          <div class="admin-form-group">
+            <input type="password" id="adminPinInput" placeholder="Clave de acceso" required autocomplete="current-password" autofocus>
+          </div>
+          <p id="adminLoginError" style="color: #dc2626; font-size: .84rem; margin-bottom: 12px;" hidden>Clave incorrecta. Intentá nuevamente.</p>
+          <button type="submit" class="btn btn--primary" style="width: 100%;">Ingresar al Panel</button>
+        </form>
+      </div>
+
+      <!-- Dashboard View (autenticado) -->
+      <div id="adminDashboardView" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+        <div class="admin-panel__tabs">
+          <div class="admin-panel__tabs-left">
+            <button type="button" class="admin-tab is-active" id="tabPropsBtn">
+              Propiedades (<span id="propCount">0</span>)
+            </button>
+            <button type="button" class="admin-tab" id="tabWorksBtn">
+              Obras de Ingeniería (<span id="worksCount">0</span>)
+            </button>
+          </div>
+          <button type="button" class="admin-btn admin-btn--primary" id="adminAddNewBtn">
+            + Agregar nuevo
+          </button>
+        </div>
+
+        <div class="admin-panel__content">
+          <!-- Vista de Lista de Propiedades -->
+          <div id="adminPropsList">
+            <div class="admin-items-grid" id="adminPropsGrid"></div>
+          </div>
+
+          <!-- Vista de Lista de Obras -->
+          <div id="adminWorksList" style="display: none;">
+            <div class="admin-items-grid" id="adminWorksGrid"></div>
+          </div>
+
+          <!-- Vista de Formulario de Edición/Creación -->
+          <div id="adminItemFormView" style="display: none; max-width: 680px; margin: auto; padding: 12px 0;">
+            <h3 id="adminFormTitle" style="font-family: var(--font-head); margin-bottom: 16px;">Editar elemento</h3>
+            <form id="adminItemForm">
+              <input type="hidden" id="adminItemType">
+              <input type="hidden" id="adminItemId">
+              <input type="hidden" id="adminFieldImgData">
+
+              <div class="admin-form-group">
+                <label for="adminFieldTitle">Título *</label>
+                <input type="text" id="adminFieldTitle" required placeholder="Ej: Departamento en Edificio Centro Comercial">
+              </div>
+
+              <!-- Campos específicos para propiedades -->
+              <div id="adminPropSpecificFields">
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label for="adminFieldLocation">Ubicación *</label>
+                    <input type="text" id="adminFieldLocation" placeholder="Ej: Concepción del Uruguay">
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="adminFieldTag">Etiqueta / Estado</label>
+                    <input type="text" id="adminFieldTag" placeholder="Ej: En venta, Alquiler, En desarrollo">
+                  </div>
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="adminFieldPrice">Precio o condición</label>
+                  <input type="text" id="adminFieldPrice" placeholder="Ej: USD 95.000 o Consultar precio">
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="adminFieldFullDesc">Descripción detallada (para el modal de detalle)</label>
+                  <textarea id="adminFieldFullDesc" rows="4" placeholder="Detalles de la propiedad, ambientes, metros cuadrados, comodidades..."></textarea>
+                </div>
+
+                <div class="admin-form-group">
+                  <label for="adminFieldFeatures">Características destacadas (separadas por coma)</label>
+                  <input type="text" id="adminFieldFeatures" placeholder="Ej: 2 Dormitorios, Cochera, Balcón al frente, Piscina">
+                </div>
+              </div>
+
+              <!-- Campo de imagen: subir desde PC o celular -->
+              <div class="admin-form-group">
+                <label>Foto / Imagen *</label>
+                <div class="admin-upload-zone" id="adminUploadZone">
+                  <label class="admin-upload-btn" for="adminFileInput">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Subir imagen desde tu PC o celular</span>
+                  </label>
+                  <input type="file" id="adminFileInput" accept="image/*" style="display: none;">
+                  <span id="adminFileStatus" class="admin-file-status">Ningún archivo seleccionado</span>
+                </div>
+                <div id="adminImgPreviewContainer" class="admin-img-preview-container" style="display: none;">
+                  <img id="adminImgPreview" class="admin-img-preview" src="" alt="Vista previa">
+                  <button type="button" class="admin-btn-remove-img" id="adminRemoveImgBtn" title="Quitar imagen">✕</button>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                <button type="button" class="admin-btn admin-btn--ghost" id="adminCancelEditBtn">Cancelar</button>
+                <button type="submit" class="admin-btn admin-btn--primary">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST CONTAINER ============ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- ============ MODAL DE CONFIRMACIÓN ============ -->
+  <div class="confirm-modal-backdrop" id="confirmModalBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="confirm-modal">
+      <h3 class="confirm-modal__title" id="confirmModalTitle">¿Eliminar elemento?</h3>
+      <p class="confirm-modal__text" id="confirmModalText">¿Estás seguro de que deseás realizar esta acción?</p>
+      <div class="confirm-modal__actions">
+        <button type="button" class="admin-btn admin-btn--ghost" id="confirmModalCancel">Cancelar</button>
+        <button type="button" class="admin-btn admin-btn--danger" id="confirmModalOk">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
 </body>
 </html>
