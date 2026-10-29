@@ -647,6 +647,21 @@
                 <input type="text" id="adminFieldTitle" required placeholder="Ej: Departamento en Edificio Centro Comercial">
               </div>
 
+              <!-- Selector de disponibilidad (Activo / Inactivo) -->
+              <div class="admin-form-group">
+                <label>Disponibilidad</label>
+                <div class="admin-status-selector">
+                  <label class="admin-status-option admin-status-option--active">
+                    <input type="radio" name="adminFieldAvailable" value="true" checked id="adminStatusActive">
+                    <span>Disponible</span>
+                  </label>
+                  <label class="admin-status-option admin-status-option--inactive">
+                    <input type="radio" name="adminFieldAvailable" value="false" id="adminStatusInactive">
+                    <span>No disponible</span>
+                  </label>
+                </div>
+              </div>
+
               <!-- Campos específicos para propiedades -->
               <div id="adminPropSpecificFields">
                 <div class="admin-form-row">

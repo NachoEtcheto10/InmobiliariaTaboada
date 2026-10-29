@@ -222,10 +222,20 @@
     if (!propCardsContainer) return;
     propCardsContainer.innerHTML = '';
     currentProperties.forEach(function (prop) {
+      var isAvailable = prop.available !== false;
       var article = document.createElement('article');
-      article.className = 'card reveal is-in';
+      article.className = 'card reveal is-in' + (isAvailable ? '' : ' is-unavailable');
 
-      var badgeHtml = prop.tag ? '<span class="card__tag">' + escapeHtml(prop.tag) + '</span>' : '';
+      var badgeHtml = '';
+      if (!isAvailable) {
+        badgeHtml = '<div class="card__tag-group">' +
+                    '  <span class="card__tag card__tag--unavailable">No disponible</span>' +
+                    (prop.tag ? '  <span class="card__tag">' + escapeHtml(prop.tag) + '</span>' : '') +
+                    '</div>';
+      } else if (prop.tag) {
+        badgeHtml = '<span class="card__tag">' + escapeHtml(prop.tag) + '</span>';
+      }
+
       var imgSrc = sanitizeMediaUrl(prop.image);
 
       article.innerHTML = [
@@ -238,7 +248,7 @@
         '  <p class="card__meta"><svg class="ico"><use href="#i-pin"/></svg> ' + escapeHtml(prop.location || 'Concepción del Uruguay') + '</p>',
         '  <div class="card__actions">',
         '    <button type="button" class="btn-card-detail" data-detail-id="' + prop.id + '">Ver detalle</button>',
-        '    <a href="#contacto" class="card__link" data-seccion="inmobiliaria" data-pub="' + escapeHtml(prop.title) + '">Consultar <svg class="ico"><use href="#i-arrow"/></svg></a>',
+        '    <a href="#contacto" class="card__link" data-seccion="inmobiliaria" data-pub="' + escapeHtml(prop.title) + '">' + (isAvailable ? 'Consultar' : 'Consultar disponibilidad') + ' <svg class="ico"><use href="#i-arrow"/></svg></a>',
         '  </div>',
         '</div>'
       ].join('');
@@ -262,11 +272,15 @@
     if (!worksCardsContainer) return;
     worksCardsContainer.innerHTML = '';
     currentWorks.forEach(function (work) {
+      var isAvailable = work.available !== false;
       var article = document.createElement('article');
-      article.className = 'work reveal is-in';
+      article.className = 'work reveal is-in' + (isAvailable ? '' : ' is-unavailable');
       var imgSrc = sanitizeMediaUrl(work.image);
+      var badgeHtml = isAvailable ? '' : '<span class="work__tag--unavailable">No disponible</span>';
+
       article.innerHTML = [
         '<img src="' + escapeHtml(imgSrc) + '" alt="' + escapeHtml(work.title) + '" loading="lazy" decoding="async">',
+        badgeHtml,
         '<div class="work__overlay">',
         '  <h3>' + escapeHtml(work.title) + '</h3>',
         '</div>'
@@ -317,8 +331,17 @@
     propModalImg.src = sanitizeMediaUrl(p.image);
     propModalImg.alt = p.title || '';
 
-    if (p.tag) {
+    var isAvailable = p.available !== false;
+    var propModalEl = propModalBackdrop.querySelector('.prop-modal');
+    if (propModalEl) propModalEl.classList.toggle('is-unavailable', !isAvailable);
+
+    if (!isAvailable) {
+      propModalBadge.textContent = 'No disponible';
+      propModalBadge.className = 'prop-modal__badge prop-modal__badge--unavailable';
+      propModalBadge.style.display = 'inline-block';
+    } else if (p.tag) {
       propModalBadge.textContent = p.tag;
+      propModalBadge.className = 'prop-modal__badge';
       propModalBadge.style.display = 'inline-block';
     } else {
       propModalBadge.style.display = 'none';
@@ -662,6 +685,8 @@
   var adminImgPreview = document.getElementById('adminImgPreview');
   var adminRemoveImgBtn = document.getElementById('adminRemoveImgBtn');
   var adminPropSpecificFields = document.getElementById('adminPropSpecificFields');
+  var adminStatusActive = document.getElementById('adminStatusActive');
+  var adminStatusInactive = document.getElementById('adminStatusInactive');
 
   var currentAdminTab = 'props'; // 'props' | 'works'
   var currentFormImgData = ''; // Almacena el DataURL o URL de la imagen en edición
@@ -729,22 +754,35 @@
         var card = document.createElement('div');
         card.className = 'admin-item-card';
         var imgSrc = prop.image || PLACEHOLDER_IMG;
+        var isAvail = prop.available !== false;
+        var statusBadge = isAvail
+          ? '<span class="admin-item-status-badge admin-item-status-badge--active">Disponible</span>'
+          : '<span class="admin-item-status-badge admin-item-status-badge--inactive">No disponible</span>';
+        var toggleBtnText = isAvail ? 'Pausar' : 'Activar';
+
         card.innerHTML = [
           '<div class="admin-item-card__media">',
           '  <img src="' + escapeHtml(imgSrc) + '" alt="">',
           '</div>',
           '<div class="admin-item-card__body">',
-          '  <div class="admin-item-card__title">' + escapeHtml(prop.title) + '</div>',
+          '  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">',
+          '    <div class="admin-item-card__title">' + escapeHtml(prop.title) + '</div>',
+          '    ' + statusBadge,
+          '  </div>',
           '  <div class="admin-item-card__meta">' + escapeHtml(prop.location || 'Sin ubicación') + (prop.tag ? ' · ' + escapeHtml(prop.tag) : '') + '</div>',
           '  <div class="admin-item-card__actions">',
-          '    <button type="button" class="admin-btn admin-btn--ghost btn-edit-prop" data-id="' + prop.id + '">✏️ Editar</button>',
-          '    <button type="button" class="admin-btn admin-btn--danger btn-del-prop" data-id="' + prop.id + '">🗑️ Eliminar</button>',
+          '    <button type="button" class="admin-btn admin-btn--toggle btn-toggle-prop" data-id="' + prop.id + '">' + toggleBtnText + '</button>',
+          '    <button type="button" class="admin-btn admin-btn--ghost btn-edit-prop" data-id="' + prop.id + '">Editar</button>',
+          '    <button type="button" class="admin-btn admin-btn--danger btn-del-prop" data-id="' + prop.id + '">Eliminar</button>',
           '  </div>',
           '</div>'
         ].join('');
         adminPropsGrid.appendChild(card);
       });
 
+      adminPropsGrid.querySelectorAll('.btn-toggle-prop').forEach(function (b) {
+        b.addEventListener('click', function () { toggleItemAvailability('props', b.getAttribute('data-id')); });
+      });
       adminPropsGrid.querySelectorAll('.btn-edit-prop').forEach(function (b) {
         b.addEventListener('click', function () { openEditForm('props', b.getAttribute('data-id')); });
       });
@@ -760,21 +798,34 @@
         var card = document.createElement('div');
         card.className = 'admin-item-card';
         var imgSrc = work.image || PLACEHOLDER_IMG;
+        var isAvail = work.available !== false;
+        var statusBadge = isAvail
+          ? '<span class="admin-item-status-badge admin-item-status-badge--active">Disponible</span>'
+          : '<span class="admin-item-status-badge admin-item-status-badge--inactive">No disponible</span>';
+        var toggleBtnText = isAvail ? 'Pausar' : 'Activar';
+
         card.innerHTML = [
           '<div class="admin-item-card__media">',
           '  <img src="' + escapeHtml(imgSrc) + '" alt="">',
           '</div>',
           '<div class="admin-item-card__body">',
-          '  <div class="admin-item-card__title">' + escapeHtml(work.title) + '</div>',
+          '  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">',
+          '    <div class="admin-item-card__title">' + escapeHtml(work.title) + '</div>',
+          '    ' + statusBadge,
+          '  </div>',
           '  <div class="admin-item-card__actions">',
-          '    <button type="button" class="admin-btn admin-btn--ghost btn-edit-work" data-id="' + work.id + '">✏️ Editar</button>',
-          '    <button type="button" class="admin-btn admin-btn--danger btn-del-work" data-id="' + work.id + '">🗑️ Eliminar</button>',
+          '    <button type="button" class="admin-btn admin-btn--toggle btn-toggle-work" data-id="' + work.id + '">' + toggleBtnText + '</button>',
+          '    <button type="button" class="admin-btn admin-btn--ghost btn-edit-work" data-id="' + work.id + '">Editar</button>',
+          '    <button type="button" class="admin-btn admin-btn--danger btn-del-work" data-id="' + work.id + '">Eliminar</button>',
           '  </div>',
           '</div>'
         ].join('');
         adminWorksGrid.appendChild(card);
       });
 
+      adminWorksGrid.querySelectorAll('.btn-toggle-work').forEach(function (b) {
+        b.addEventListener('click', function () { toggleItemAvailability('works', b.getAttribute('data-id')); });
+      });
       adminWorksGrid.querySelectorAll('.btn-edit-work').forEach(function (b) {
         b.addEventListener('click', function () { openEditForm('works', b.getAttribute('data-id')); });
       });
@@ -819,6 +870,10 @@
         adminFieldFeatures.value = p && p.features ? (Array.isArray(p.features) ? p.features.join(', ') : p.features) : '';
         setImgPreview(p ? (p.image || '') : '');
         if (adminFileStatus) adminFileStatus.textContent = (p && p.image) ? 'Imagen actual conservada' : 'Ningún archivo seleccionado';
+        if (adminStatusActive && adminStatusInactive) {
+          if (p && p.available === false) adminStatusInactive.checked = true;
+          else adminStatusActive.checked = true;
+        }
       } else {
         // Alta nueva: campos totalmente vacíos por defecto
         adminFormTitle.textContent = 'Nueva Propiedad';
@@ -830,6 +885,7 @@
         adminFieldFeatures.value = '';
         setImgPreview('');
         if (adminFileStatus) adminFileStatus.textContent = 'Ningún archivo seleccionado';
+        if (adminStatusActive) adminStatusActive.checked = true;
       }
     } else {
       if (adminPropSpecificFields) adminPropSpecificFields.style.display = 'none';
@@ -839,12 +895,17 @@
         adminFieldTitle.value = w ? w.title : '';
         setImgPreview(w ? (w.image || '') : '');
         if (adminFileStatus) adminFileStatus.textContent = (w && w.image) ? 'Imagen actual conservada' : 'Ningún archivo seleccionado';
+        if (adminStatusActive && adminStatusInactive) {
+          if (w && w.available === false) adminStatusInactive.checked = true;
+          else adminStatusActive.checked = true;
+        }
       } else {
         // Alta nueva de obra: campos vacíos por defecto
         adminFormTitle.textContent = 'Nueva Obra de Ingeniería';
         adminFieldTitle.value = '';
         setImgPreview('');
         if (adminFileStatus) adminFileStatus.textContent = 'Ningún archivo seleccionado';
+        if (adminStatusActive) adminStatusActive.checked = true;
       }
     }
   }
@@ -892,12 +953,12 @@
             var dataUrl = canvas.toDataURL('image/jpeg', 0.82);
 
             setImgPreview(dataUrl);
-            if (adminFileStatus) adminFileStatus.textContent = '✓ Imagen lista (' + Math.round(dataUrl.length / 1024) + ' KB)';
+            if (adminFileStatus) adminFileStatus.textContent = 'Imagen lista (' + Math.round(dataUrl.length / 1024) + ' KB)';
             showToast('Imagen cargada correctamente', 'success');
           } catch (err) {
             console.error('Error optimizando imagen:', err);
             setImgPreview(event.target.result);
-            if (adminFileStatus) adminFileStatus.textContent = '✓ Imagen seleccionada';
+            if (adminFileStatus) adminFileStatus.textContent = 'Imagen seleccionada';
           }
         };
         img.onerror = function () {
@@ -933,6 +994,8 @@
         return;
       }
 
+      var isAvailable = adminStatusActive ? adminStatusActive.checked : true;
+
       if (type === 'props') {
         var feats = adminFieldFeatures.value.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
         var propData = {
@@ -943,7 +1006,8 @@
           price: adminFieldPrice.value.trim(),
           fullDesc: adminFieldFullDesc.value.trim(),
           features: feats,
-          image: img
+          image: img,
+          available: isAvailable
         };
 
         if (id) {
@@ -959,7 +1023,8 @@
         var workData = {
           id: id || ('work-' + Date.now()),
           title: title,
-          image: img
+          image: img,
+          available: isAvailable
         };
 
         if (id) {
@@ -1005,6 +1070,25 @@
         showToast('Elemento eliminado correctamente', 'info');
       }
     );
+  }
+
+  function toggleItemAvailability(type, id) {
+    if (type === 'props') {
+      var p = currentProperties.find(function (item) { return item.id === id; });
+      if (!p) return;
+      p.available = (p.available === false) ? true : false;
+      saveProperties(currentProperties);
+      renderPropertiesFrontend();
+      showToast(p.available ? 'Propiedad marcada como disponible' : 'Propiedad en pausa (no disponible)', 'info');
+    } else {
+      var w = currentWorks.find(function (item) { return item.id === id; });
+      if (!w) return;
+      w.available = (w.available === false) ? true : false;
+      saveWorks(currentWorks);
+      renderWorksFrontend();
+      showToast(w.available ? 'Obra marcada como disponible' : 'Obra en pausa (no disponible)', 'info');
+    }
+    renderAdminLists();
   }
 
   var adminLoginAttempts = 0;

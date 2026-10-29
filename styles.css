@@ -708,6 +708,38 @@ p { margin: 0 0 1em; }
   font-family: var(--font-head); font-weight: 700; font-size: .72rem;
   letter-spacing: .08em; text-transform: uppercase;
   padding: 4px 10px; border-radius: 6px; backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+/* Estado Inactivo / No disponible para usuarios */
+.card.is-unavailable .card__media img,
+.work.is-unavailable img,
+.prop-modal.is-unavailable .prop-modal__media img {
+  filter: grayscale(100%) contrast(88%);
+  opacity: .82;
+}
+.card.is-unavailable .card__body {
+  opacity: .92;
+}
+.card__tag--unavailable,
+.prop-modal__badge--unavailable {
+  background: #3f3b39 !important;
+  color: #f5f3ef !important;
+  border: 1px solid rgba(255, 255, 255, .18);
+  letter-spacing: .08em;
+}
+.work__tag--unavailable {
+  position: absolute; top: 14px; left: 14px; z-index: 2;
+  background: rgba(35, 31, 30, .92); color: #f5f3ef;
+  font-family: var(--font-head); font-weight: 700; font-size: .74rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, .18);
+}
+.card__tag-group {
+  position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2;
+}
+.card__tag-group .card__tag {
+  position: static;
 }
 
 /* Acceso discreto a Admin & Créditos en Footer */
@@ -821,6 +853,51 @@ p { margin: 0 0 1em; }
 [data-theme="dark"] .admin-btn--danger { background: #451a1a; color: #f87171; border-color: #7f1d1d; }
 .admin-btn--ghost { background: var(--surface-2); color: var(--text); border-color: var(--border); }
 .admin-btn--ghost:hover { background: var(--border); }
+.admin-btn--toggle { background: var(--surface-2); color: var(--text-soft); border-color: var(--border); font-size: .76rem; padding: 6px 10px; }
+.admin-btn--toggle:hover { background: var(--border); color: var(--text); }
+
+.admin-item-status-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px;
+  font-size: .72rem; font-weight: 700; font-family: var(--font-head); text-transform: uppercase; letter-spacing: .04em;
+  margin-bottom: 6px; align-self: flex-start;
+}
+.admin-item-status-badge--active {
+  background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0;
+}
+[data-theme="dark"] .admin-item-status-badge--active {
+  background: #14532d; color: #86efac; border-color: #166534;
+}
+.admin-item-status-badge--inactive {
+  background: #f4f4f5; color: #71717a; border: 1px solid #e4e4e7;
+}
+[data-theme="dark"] .admin-item-status-badge--inactive {
+  background: #27272a; color: #a1a1aa; border-color: #3f3f46;
+}
+
+/* Selector de disponibilidad en formulario de administración */
+.admin-status-selector {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;
+}
+.admin-status-option {
+  cursor: pointer; display: block; position: relative; margin: 0;
+}
+.admin-status-option input {
+  position: absolute; opacity: 0; pointer-events: none;
+}
+.admin-status-option span {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface-2); color: var(--text-soft); font-family: var(--font-head);
+  font-weight: 700; font-size: .86rem; transition: all .2s var(--ease);
+}
+.admin-status-option input:checked + span {
+  background: var(--surface); color: var(--text); border-color: var(--yellow);
+  box-shadow: 0 0 0 2px rgba(247, 204, 51, .25);
+}
+.admin-status-option--inactive input:checked + span {
+  border-color: #71717a; color: var(--text);
+  box-shadow: 0 0 0 2px rgba(113, 113, 122, .25);
+}
 
 /* Formulario de creación/edición de items */
 .admin-form-group {
